@@ -7,10 +7,11 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserSchema } from './schema/auth.schema';
 import { JwtStrategy } from './jwtstrategy';
-import { WalletSchema } from './schema/wallet.schema';
+import { WalletModule } from 'src/wallet/wallet.module';
 
 @Module({
   imports: [
+    WalletModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       inject: [ConfigService],
@@ -23,10 +24,7 @@ import { WalletSchema } from './schema/wallet.schema';
         };
       },
     }),
-    MongooseModule.forFeature([
-      { name: 'User', schema: UserSchema },
-      { name: 'Wallet', schema: WalletSchema },
-    ]),
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
