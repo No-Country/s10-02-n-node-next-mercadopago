@@ -7,9 +7,11 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserSchema } from './schema/auth.schema';
 import { JwtStrategy } from './jwtstrategy';
+import { WalletModule } from 'src/wallet/wallet.module';
 
 @Module({
   imports: [
+    WalletModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       inject: [ConfigService],

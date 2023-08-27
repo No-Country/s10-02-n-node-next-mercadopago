@@ -1,43 +1,73 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schema/auth.schema';
+
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 import { SignUpDto } from './dto/sign-up.dto';
 import { LoginDto } from './dto/login-dto';
 import { UnauthorizedException } from '@nestjs/common';
+import { User } from './schema/auth.schema';
+import { WalletService } from 'src/wallet/wallet.service';
+import { LoginResponse } from './interfaces/login-response';
+import { JwtPayload } from './interfaces/jwt-payload';
+
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
+    @Inject(forwardRef(() => JwtService))
     private jwtService: JwtService,
+    @Inject(forwardRef(() => WalletService))
+    private readonly walletService: WalletService,
   ) {}
 
-  async signUp(signUpDto: SignUpDto): Promise<{ token: string }> {
-    const { name, email, password } = signUpDto;
+  async createUser(signUpDto: SignUpDto): Promise<User> {
+    try {
+      const { password, ...userData } = signUpDto;
 
-    const userExists = await this.userModel.findOne({ email });
-    if (userExists) {
-      throw new UnauthorizedException('User already exists');
+      const newUser = new this.userModel({
+        password: bcrypt.hashSync(password, 10),
+        ...userData,
+      });
+
+      await newUser.save();
+
+      const wallet = await this.walletService.createWallet(
+        newUser._id.toString(),
+      );
+      newUser.wallet = wallet._id.toString();
+
+      const { password: _, ...user } = newUser.toJSON();
+
+      return user as unknown as User;
+    } catch (error) {
+      if (error.code === 11000) {
+        throw new BadRequestException(`${signUpDto.email} already exists!`);
+      }
+      throw new InternalServerErrorException('Something bad happen!!!');
     }
+  }
 
-    const hasedPasswrod = await bcrypt.hash(password, 10);
-    const user = await this.userModel.create({
-      name,
-      email,
-      password: hasedPasswrod,
-    });
-
-    const token = this.jwtService.sign({
-      id: user._id,
-      email: user.email,
-    });
+  async signUp(signUpDto: SignUpDto): Promise<LoginResponse> {
+    const user = await this.createUser(signUpDto);
 
     return {
-      token,
+      user: user,
+      token: this.getJwtToken({ id: user._id }),
     };
+  }
+
+  getJwtToken(payload: JwtPayload) {
+    const token = this.jwtService.sign(payload);
+    return token;
   }
 
   async login(loginDto: LoginDto): Promise<{ token: string }> {
