@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { WalletService } from './wallet.service';
 import { Wallet } from './schema/wallet.model';
-import { TransferData } from 'src/auth/interfaces/transfer-data';
-import { TransferResult } from 'src/auth/interfaces/Transfer-result';
+import { TransferData } from './interfaces/transfer-data';
+import { TransferResult } from './interfaces/Transfer-result';
 
 @Controller('wallet')
 export class WalletController {

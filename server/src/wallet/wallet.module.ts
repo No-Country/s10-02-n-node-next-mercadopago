@@ -7,8 +7,6 @@ import { WalletSchema } from './schema/wallet.model';
 
 @Module({
   controllers: [WalletController],
-  providers: [WalletService],
-  exports: [WalletService],
   imports: [
     MongooseModule.forFeature([
       {
@@ -17,5 +15,13 @@ import { WalletSchema } from './schema/wallet.model';
       },
     ]),
   ],
+  providers: [
+    WalletService,
+    {
+      provide: 'walletService',
+      useClass: WalletService,
+    },
+  ],
+  exports: [WalletService, MongooseModule],
 })
 export class WalletModule {}

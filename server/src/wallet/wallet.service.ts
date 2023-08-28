@@ -1,9 +1,10 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { TransferResult } from 'src/auth/interfaces/Transfer-result';
-import { TransferData } from 'src/auth/interfaces/transfer-data';
+
 import { Wallet } from 'src/wallet/schema/wallet.model';
+import { TransferData } from './interfaces/transfer-data';
+import { TransferResult } from './interfaces/Transfer-result';
 
 @Injectable()
 export class WalletService {
