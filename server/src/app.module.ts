@@ -10,6 +10,7 @@ import { MailingModule } from './mailing/mailing.module';
 import * as path from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+
 @Module({
   //Importamos los modulos que vamos a usar
   imports: [

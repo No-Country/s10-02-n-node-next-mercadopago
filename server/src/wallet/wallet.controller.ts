@@ -3,7 +3,9 @@ import { WalletService } from './wallet.service';
 import { Wallet } from './schema/wallet.model';
 import { TransferData } from 'src/auth/interfaces/transfer-data';
 import { TransferResult } from 'src/auth/interfaces/Transfer-result';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Wallet')
 @Controller('wallet')
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
