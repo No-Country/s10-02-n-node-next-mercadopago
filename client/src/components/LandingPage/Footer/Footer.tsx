@@ -79,7 +79,7 @@ const Footer = () => {
             <p className=' hover:text-blue-500'>Cuenta Mercado Pago</p>
           </Link>
           <br />
-          <Link href='/transferDebit'>
+          <Link href={`/`}>
             <p className=' hover:text-blue-500'>Generar rendimientos con Mercado Fondo</p>
           </Link>
           <br />
