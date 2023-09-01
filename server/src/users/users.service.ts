@@ -15,6 +15,7 @@ import { Types } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 import { WalletService } from 'src/wallet/wallet.service';
 import { User } from './schema/user.model';
+import { UserDocument } from './schema/user.schema';
 
 @Injectable()
 export class UsersService {
@@ -22,7 +23,7 @@ export class UsersService {
     @InjectModel('User') private readonly userModel: Model<User>,
     @Inject(forwardRef(() => WalletService))
     private readonly walletService: WalletService,
-  ) {}
+  ) { }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     try {
@@ -117,6 +118,38 @@ export class UsersService {
       throw new NotFoundException('User not found');
     }
 
+    return user;
+  }
+
+  async createCard(userId: string, createCardDto: any): Promise<User> {
+    let user: UserDocument = await this.userModel.findById(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const payment = {
+      paymentType: 'card',
+      card: createCardDto,
+    };
+
+    user.paymentMethods.push(payment);
+    user.save();
+    return user;
+  }
+
+  async createBankAccount(userId: string, createBankAccountDto: any): Promise<User> {
+    let user: UserDocument = await this.userModel.findById(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const payment = {
+      paymentType: 'bankAccount',
+      bankAccount: createBankAccountDto,
+    };
+
+    user.paymentMethods.push(payment);
+    user.save();
     return user;
   }
 }

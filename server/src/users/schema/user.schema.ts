@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
+import { Payment, PaymentSchema } from 'src/payment/schemas/payment.schema';
 
 export type UserDocument = HydratedDocument<User>;
 @Schema({
@@ -22,6 +23,9 @@ export class User {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Wallet' }) // Agrega esta línea
   walletId: mongoose.Schema.Types.ObjectId;
+
+  @Prop([PaymentSchema]) // Relación con PaymentSchema
+  paymentMethods: Payment[];
 
   @Prop({ type: [String], default: ['user'] })
   roles: string[];
