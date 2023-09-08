@@ -4,13 +4,11 @@ import {
   Injectable,
   InternalServerErrorException,
   NotFoundException,
-  UnprocessableEntityException,
   forwardRef,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Wallet } from 'src/wallet/schema/wallet.model';
-import { TransferData } from './interfaces/transfer-data';
 import { CvuGeneratorService } from './cvu-alias-generator/cvu-generator.service';
 import { UsersService } from 'src/users/users.service';
 
@@ -22,6 +20,9 @@ import { PaymentService } from 'src/payment/payment.service';
 import { PaymentTypes } from 'src/payment/interfaces/payment.types';
 import { ActionGetInfo } from './interfaces/operations-get-wallet';
 import { ActionPostWallet } from './interfaces/operations-post-wallet.types';
+import { BankAccountMethod } from 'src/payment/schema/accountBank.model';
+import { HandlingErrorsService } from './handling-errors/handling-errors-wallet.service';
+import { TransferDto } from './dto/transfer-dto';
 
 @Injectable()
 export class WalletService {
@@ -30,6 +31,8 @@ export class WalletService {
     @InjectModel('Wallet') private readonly walletModel: Model<Wallet>,
     @InjectModel('CreditCard')
     private readonly creditCardModel: Model<CreditCardMethod>,
+    @InjectModel('BankAccount')
+    private readonly bankAccountModel: Model<BankAccountMethod>,
 
     @Inject(forwardRef(() => UsersService))
     private readonly userService: UsersService,
@@ -39,12 +42,25 @@ export class WalletService {
 
     @Inject(forwardRef(() => CvuGeneratorService))
     private readonly cvuGeneratorService: CvuGeneratorService,
+
+    @Inject(forwardRef(() => HandlingErrorsService))
+    private readonly handlingErrorsService: HandlingErrorsService,
   ) {
     this.walletDto = new this.walletModel();
   }
 
   async findById(walletId: string): Promise<Wallet | null> {
     return this.walletModel.findById(walletId).exec();
+  }
+
+  async getWallets(): Promise<Wallet[]> {
+    return this.walletModel.find().exec();
+  }
+  async getWalletByCvu(cvu: string): Promise<Wallet | null> {
+    return this.walletModel.findOne({ cvu }).exec();
+  }
+  async getWalletByAlias(alias: string): Promise<Wallet | null> {
+    return this.walletModel.findOne({ alias }).exec();
   }
 
   async getWalletAndCheck(walletId: string): Promise<Wallet> {
@@ -57,14 +73,16 @@ export class WalletService {
     return wallet;
   }
 
+  async getWalletByFilter(filter: Record<string, any>): Promise<Wallet | null> {
+    return this.walletModel.findOne(filter).exec();
+  }
+
   async createWallet(): Promise<Wallet> {
     try {
       const cvu = await this.cvuGeneratorService.generateUniqueCVU();
       const alias = await this.cvuGeneratorService.generateUniqueAlias();
       //const alias = await this;
-
       const { ...data } = this.walletDto;
-
       const newWallet = new this.walletModel({
         alias,
         data,
@@ -106,94 +124,43 @@ export class WalletService {
     }
   }
 
-  // async operationsWallet(
-  //   userId: string,
-  //   amount: number,
-  //   action: ActionPostWallet,
-  // ): Promise<Wallet | { amount: number } | string> {
-  //   const user = await this.userService.getUserAndCheck(userId);
-  //   const wallet = await this.findById(user.walletId.toString());
-  //   if (!wallet) {
-  //     throw new NotFoundException('Wallet not found');
-  //   }
-
-  //   switch (action) {
-  //     case 'deposit':
-  //       wallet.balance += amount;
-  //       await wallet.save();
-  //       return wallet;
-
-  //     case 'withdraw':
-  //       wallet.balance -= amount;
-  //       await wallet.save();
-  //       return wallet;
-  //     default:
-  //       throw new Error('Invalid action');
-  //   }
-  // }
-
   async operationsWallet(
     userId: string,
-    amount: number,
-    selectedPaymentId: string,
     action: ActionPostWallet,
-    paymentTypes: PaymentTypes, // Categoría de pago (card o bank)
+    paymentTypes: PaymentTypes,
+    selectedPaymentId: string,
+    amount: number,
   ): Promise<Wallet | { amount: number; selectedPaymentId: string } | string> {
     const user = await this.userService.getUserAndCheck(userId);
     const wallet = await this.findById(user.walletId.toString());
-    if (!wallet) {
-      throw new NotFoundException('Wallet not found');
-    }
-    const bankAccount = await this.paymentService.getBankAccountById(
-      wallet.paymentMethodsBanks[0],
+    const searchPaymentMethod = await this.paymentService.searchPymentMethods(
+      selectedPaymentId,
+      paymentTypes,
     );
-    if (!bankAccount) {
-      throw new NotFoundException('Bank account not found');
-    }
+
+    await this.handlingErrorsService.errorHandlingOperationsWallet(
+      wallet,
+      searchPaymentMethod,
+      amount,
+    );
+
     switch (action) {
       case 'deposit':
-        if (paymentTypes === 'creditCard') {
-          const card = await this.paymentService.getCardById(selectedPaymentId);
-          if (!card) {
-            throw new NotFoundException('Card not found');
-          }
-          card.balance -= amount;
-          await card.save();
-          wallet.balance += amount;
-        }
-        if (paymentTypes === 'accountBank') {
-          const bankAccount = await this.paymentService.getBankAccountById(
-            selectedPaymentId,
-          );
-          if (!bankAccount) {
-            throw new NotFoundException('Bank account not found');
-          }
-          bankAccount.balance -= amount;
-          await bankAccount.save();
-        }
+        await searchPaymentMethod.save();
         wallet.balance += amount;
         await wallet.save();
         return wallet;
       case 'withdraw':
-        if (paymentTypes === 'creditCard') {
-          const card = await this.paymentService.getCardById(selectedPaymentId);
-          if (!card) {
-            throw new NotFoundException('Card not found');
-          }
-          card.balance += amount;
-          await card.save();
-          wallet.balance -= amount;
-        }
-        if (paymentTypes === 'accountBank') {
-          const bankAccount = await this.paymentService.getBankAccountById(
-            selectedPaymentId,
+        if (
+          searchPaymentMethod.paymentType === ('CreditCard' as PaymentTypes)
+        ) {
+          throw new BadRequestException(
+            'To withdraw funds select a bank account or wallet',
           );
-          if (!bankAccount) {
-            throw new NotFoundException('Bank account not found');
-          }
-          bankAccount.balance += amount;
-          await bankAccount.save();
         }
+
+        searchPaymentMethod.balance += amount;
+        await searchPaymentMethod.save();
         wallet.balance -= amount;
         await wallet.save();
         return wallet;
@@ -204,26 +171,21 @@ export class WalletService {
 
   async transferFunds(
     fromUserId: string,
-    transferData: TransferData,
+    transferDto: TransferDto,
   ): Promise<TransferResult> {
     const fromUser = await this.userService.getUserAndCheck(fromUserId);
-    const toUser = await this.userService.getUserAndCheck(
-      transferData.toUserId,
-    );
-
+    const toUser = await this.userService.getUserAndCheck(transferDto.toUserId);
     const fromWallet = await this.findById(fromUser.walletId.toString());
     const toWallet = await this.findById(toUser.walletId.toString());
 
-    if (!fromWallet || !toWallet) {
-      throw new NotFoundException('Wallet not found');
-    }
+    await this.handlingErrorsService.errorHandlingTransferFunds(
+      fromWallet,
+      toWallet,
+      transferDto,
+    );
 
-    if (fromWallet.balance < transferData.balance) {
-      throw new UnprocessableEntityException('Insufficient balance');
-    }
-
-    fromWallet.balance -= transferData.balance;
-    toWallet.balance += transferData.balance;
+    fromWallet.balance -= transferDto.amount;
+    toWallet.balance += transferDto.amount;
 
     await Promise.all([fromWallet.save(), toWallet.save()]);
 
@@ -232,15 +194,5 @@ export class WalletService {
       toWallet: toWallet.toObject(),
       message: 'Operation successful',
     };
-  }
-
-  async getWallets(): Promise<Wallet[]> {
-    return this.walletModel.find().exec();
-  }
-  async getWalletByCvu(cvu: string): Promise<Wallet | null> {
-    return this.walletModel.findOne({ cvu }).exec();
-  }
-  async getWalletByAlias(alias: string): Promise<Wallet | null> {
-    return this.walletModel.findOne({ alias }).exec();
   }
 }

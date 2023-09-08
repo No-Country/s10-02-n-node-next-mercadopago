@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { WalletService } from './wallet.service';
 import { Wallet } from './schema/wallet.model';
-import { TransferData } from './interfaces/transfer-data';
 import { TransferResult } from './interfaces/Transfer-result';
 import { UsersService } from 'src/users/users.service';
 
@@ -19,9 +18,10 @@ import { ApiBearerAuth, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { AuthGuard } from 'src/users/guard/auth-guard';
 import { Request } from 'express';
 import { User } from 'src/users/schema/user.model';
-import { PaymentTypes } from 'src/payment/interfaces/payment.types';
 import { ActionGetInfo } from './interfaces/operations-get-wallet';
 import { ActionPostWallet } from './interfaces/operations-post-wallet.types';
+import { TransferDto } from './dto/transfer-dto';
+import { OperationsWalletDto } from './dto/operation-wallet.dto';
 
 @Controller('wallet')
 export class WalletController {
@@ -47,31 +47,30 @@ export class WalletController {
   @ApiUnauthorizedResponse()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  @Post('wallet/:action/:paymentTypes')
+  @Post('wallet/:action')
   async operationsWallet(
     @Req() { user }: Request & { user: User },
     @Param('action') action: ActionPostWallet,
-    @Param('paymentTypes') paymentTypes: PaymentTypes,
-    @Body() depositData: { amount: number; selectedPaymentId: string },
-  ): Promise<Wallet | { amount: number; selectedPaymentId: string } | string> {
+    @Body() { paymentTypes, selectedPaymentId, amount }: OperationsWalletDto,
+  ) {
     return this.walletService.operationsWallet(
       user.id,
-      depositData.amount,
-      depositData.selectedPaymentId,
       action,
       paymentTypes,
+      selectedPaymentId,
+      amount,
     );
   }
 
   @ApiUnauthorizedResponse()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  @Post(':userId/transfer')
+  @Post('transfer')
   async transferBetweenWallets(
     @Req() { user }: Request & { user: User },
-    @Body() transferData: TransferData,
+    @Body() transferDto: TransferDto,
   ): Promise<TransferResult> {
-    return this.walletService.transferFunds(user.id, transferData);
+    return this.walletService.transferFunds(user.id, transferDto);
   }
 
   //Este lo dejo asi para poder hacer los test de prueba

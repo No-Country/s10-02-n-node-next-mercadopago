@@ -11,6 +11,7 @@ import { CreditCardSchema } from 'src/payment/schema/creditCard.model';
 import { BankAccountSchema } from 'src/payment/schema/accountBank.model';
 import { PaymentService } from 'src/payment/payment.service';
 import { CvuGeneratorService } from './cvu-alias-generator/cvu-generator.service';
+import { HandlingErrorsService } from './handling-errors/handling-errors-wallet.service';
 @Module({
   controllers: [WalletController],
   imports: [
@@ -39,7 +40,8 @@ import { CvuGeneratorService } from './cvu-alias-generator/cvu-generator.service
     JwtService,
     PaymentService,
     CvuGeneratorService,
+    HandlingErrorsService,
   ],
-  exports: [WalletService, MongooseModule],
+  exports: [WalletService, HandlingErrorsService, MongooseModule],
 })
 export class WalletModule {}

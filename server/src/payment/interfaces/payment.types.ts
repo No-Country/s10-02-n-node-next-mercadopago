@@ -3,4 +3,4 @@
 //   BankAccount = 'accountBank',
 // }
 
-export type PaymentTypes = 'creditCard' | 'accountBank';
+export type PaymentTypes = 'CreditCard' | 'AccountBank';

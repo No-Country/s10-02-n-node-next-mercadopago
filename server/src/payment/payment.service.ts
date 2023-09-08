@@ -15,6 +15,7 @@ import { CrediCardDto } from './dto/create-card.dto';
 import { CreateBankDto } from './dto/create-bank..dto';
 import { ActionPostPayment } from './interfaces/payment.action';
 import { BankAccountMethod } from './schema/accountBank.model';
+import { PaymentTypes } from './interfaces/payment.types';
 
 @Injectable()
 export class PaymentService {
@@ -93,6 +94,20 @@ export class PaymentService {
       .findById(bankAccountId)
       .exec();
     return bankAccount;
+  }
+
+  async searchPymentMethods(
+    selectedPaymentId: string,
+    paymentTypes: PaymentTypes,
+  ): Promise<CreditCardMethod | BankAccountMethod | undefined> {
+    switch (paymentTypes) {
+      case 'CreditCard':
+        return this.getCardById(selectedPaymentId);
+      case 'AccountBank':
+        return this.getBankAccountById(selectedPaymentId);
+      default:
+        throw new Error('Invalid action');
+    }
   }
 
   async getAllPaymentMethodsCards(userId: string): Promise<CreditCardMethod[]> {
