@@ -30,7 +30,7 @@ export class CrediCardDto {
   @MinLength(16)
   @MaxLength(16)
   @Matches(/^\d[\d\s-]*$/, {
-    message: 'Number card no valid',
+    message: 'This card is already registered',
   })
   cardNumber: string;
 

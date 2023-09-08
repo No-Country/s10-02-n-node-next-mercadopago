@@ -27,7 +27,7 @@ export class CreateBankDto {
   @MinLength(4)
   @MaxLength(16)
   @Matches(/^\d[\d\s-]*$/, {
-    message: 'Number account bank no valid',
+    message: 'This account is already registered',
   })
   accountNumber: string;
 

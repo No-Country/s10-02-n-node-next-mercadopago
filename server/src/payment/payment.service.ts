@@ -19,6 +19,7 @@ import { PaymentTypes } from './interfaces/payment.types';
 
 @Injectable()
 export class PaymentService {
+  paymentNumber: string;
   constructor(
     @InjectModel('CreditCard')
     private readonly creditCardModel: Model<CreditCardMethod>,
@@ -52,6 +53,7 @@ export class PaymentService {
       }
 
       let newPaymentMethod: CreditCardMethod | BankAccountMethod;
+
       switch (action) {
         case 'card':
           newPaymentMethod = new this.creditCardModel(paymentDto);
@@ -74,9 +76,9 @@ export class PaymentService {
       if (error instanceof NotFoundException) {
         throw error;
       } else {
-        // Manejo de otros errores
+        // Manejo de otros errore
         throw new InternalServerErrorException(
-          'Can not add payment method, card no valid',
+          `This payment method is already registered`,
         );
       }
     }
