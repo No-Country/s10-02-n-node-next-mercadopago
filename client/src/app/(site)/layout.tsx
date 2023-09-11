@@ -1,8 +1,6 @@
 import Drawer from '@/components/Home/Drawer'
 import Footer from '@/components/Home/Footer'
 import NavbarHome from '@/components/Home/NavbarHome'
-import { Suspense } from 'react'
-import Loading from './loading'
 
 export default function DashboardLayout({
   children,
@@ -15,7 +13,7 @@ export default function DashboardLayout({
         <Drawer />
         <div className="flex flex-col ">
           <NavbarHome />
-          {children}
+          <div className="min-h-[963px]">{children}</div>
           <Footer />
         </div>
       </section>
