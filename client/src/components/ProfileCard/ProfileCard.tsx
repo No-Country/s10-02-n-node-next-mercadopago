@@ -32,14 +32,16 @@ export default function ProfileCard () {
               <Image src={Check} alt='Admin' width='15' height='15' />
             </div>
           </div>
-          <div className='mt-10 ml-10 leading-loose text-left'>
-            <p className='mt-2 font-semibold profile-title'>
-              Información personal
-            </p>
-            <p className='mt-2 text-base font-light profile-subtitle'>
-              Información de tu identificación oficial y tu actividad fiscal.
-            </p>
-          </div>
+          <Link href='./'>
+            <div className='mt-10 ml-10 leading-loose text-left'>
+              <p className='mt-2 font-semibold profile-title'>
+                Información personal
+              </p>
+              <p className='mt-2 text-base font-light profile-subtitle'>
+                Información de tu identificación oficial y tu actividad fiscal.
+              </p>
+            </div>
+          </Link>
           <div className='mt-10 ml-10 leading-loose text-left'>
             <Link href='/'>
               <Image
@@ -110,12 +112,14 @@ export default function ProfileCard () {
               <Image src={Check} alt='Admin' width='15' height='15' />
             </div>
           </div>
-          <div className='mt-10 ml-10 leading-loose text-left'>
-            <p className='mt-2 font-semibold profile-title'>Seguridad</p>
-            <p className='mt-2 text-base font-light profile-subtitle'>
-              Tienes configurada la seguridad de tu cuenta.
-            </p>
-          </div>
+          <Link href='./'>
+            <div className='mt-10 ml-10 leading-loose text-left'>
+              <p className='mt-2 font-semibold profile-title'>Seguridad</p>
+              <p className='mt-2 text-base font-light profile-subtitle'>
+                Tienes configurada la seguridad de tu cuenta.
+              </p>
+            </div>
+          </Link>
           <div className='mt-10 ml-10 leading-loose text-left'>
             <Link href='/'>
               <Image
@@ -141,12 +145,14 @@ export default function ProfileCard () {
               />
             </Link>
           </div>
-          <div className='mt-10 ml-10 leading-loose text-left'>
-            <p className='mt-2 font-semibold profile-title'>Tarjetas</p>
-            <p className='mt-2 text-base font-light profile-subtitle'>
-              Tienes configurada la seguridad de tu cuenta.
-            </p>
-          </div>
+          <Link href='./'>
+            <div className='mt-10 ml-10 leading-loose text-left'>
+              <p className='mt-2 font-semibold profile-title'>Tarjetas</p>
+              <p className='mt-2 text-base font-light profile-subtitle'>
+                Tienes configurada la seguridad de tu cuenta.
+              </p>
+            </div>
+          </Link>
           <div className='mt-10 ml-10 leading-loose text-left'>
             <Link href='/'>
               <Image
@@ -172,12 +178,14 @@ export default function ProfileCard () {
               />
             </Link>
           </div>
-          <div className='mt-10 ml-10 leading-loose text-left'>
-            <p className='mt-2 font-semibold profile-title'>Direcciones</p>
-            <p className='mt-2 text-base font-light profile-subtitle'>
-              Direcciones guardadas en tu cuenta.
-            </p>
-          </div>
+          <Link href='./'>
+            <div className='mt-10 ml-10 leading-loose text-left'>
+              <p className='mt-2 font-semibold profile-title'>Direcciones</p>
+              <p className='mt-2 text-base font-light profile-subtitle'>
+                Direcciones guardadas en tu cuenta.
+              </p>
+            </div>
+          </Link>
           <div className='mt-10 ml-10 leading-loose text-left'>
             <Link href='/'>
               <Image
@@ -203,12 +211,14 @@ export default function ProfileCard () {
               />
             </Link>
           </div>
-          <div className='mt-10 ml-10 leading-loose text-left'>
-            <p className='mt-2 font-semibold profile-title'>Privacidad</p>
-            <p className='mt-2 text-base font-light profile-subtitle'>
-              Preferencias y control sobre el uso de tus datos.
-            </p>
-          </div>
+          <Link href='./'>
+            <div className='mt-10 ml-10 leading-loose text-left'>
+              <p className='mt-2 font-semibold profile-title'>Privacidad</p>
+              <p className='mt-2 text-base font-light profile-subtitle'>
+                Preferencias y control sobre el uso de tus datos.
+              </p>
+            </div>
+          </Link>
           <div className='mt-10 ml-10 leading-loose text-left'>
             <Link href='/'>
               <Image
@@ -234,12 +244,14 @@ export default function ProfileCard () {
               />
             </Link>
           </div>
-          <div className='mt-10 ml-10 leading-loose text-left'>
-            <p className='mt-2 font-semibold profile-title'>Comunicaciones</p>
-            <p className='mt-2 text-base font-light profile-subtitle'>
-              Elige el tipo de información que quieres recibir.
-            </p>
-          </div>
+          <Link href='./'>
+            <div className='mt-10 ml-10 leading-loose text-left'>
+              <p className='mt-2 font-semibold profile-title'>Comunicaciones</p>
+              <p className='mt-2 text-base font-light profile-subtitle'>
+                Elige el tipo de información que quieres recibir.
+              </p>
+            </div>
+          </Link>
           <div className='mt-10 ml-10 leading-loose text-left'>
             <Link href='/'>
               <Image
@@ -265,12 +277,14 @@ export default function ProfileCard () {
               />
             </Link>
           </div>
-          <div className='mt-10 ml-10 leading-loose text-left'>
-            <p className='mt-2 font-semibold profile-title'>Suscripciones</p>
-            <p className='mt-2 text-base font-light profile-subtitle'>
-              Gestiona tus suscripciones.
-            </p>
-          </div>
+          <Link href='./'>
+            <div className='mt-10 ml-10 leading-loose text-left'>
+              <p className='mt-2 font-semibold profile-title'>Suscripciones</p>
+              <p className='mt-2 text-base font-light profile-subtitle'>
+                Gestiona tus suscripciones.
+              </p>
+            </div>
+          </Link>
           <div className='mt-10 ml-10 leading-loose text-left'>
             <Link href='/'>
               <Image
