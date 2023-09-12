@@ -149,7 +149,7 @@ export default function ProfileCard () {
             <div className='mt-10 ml-10 leading-loose text-left'>
               <p className='mt-2 font-semibold profile-title'>Tarjetas</p>
               <p className='mt-2 text-base font-light profile-subtitle'>
-                Tienes configurada la seguridad de tu cuenta.
+                Tarjetas que has creado en tu cuenta.
               </p>
             </div>
           </Link>
