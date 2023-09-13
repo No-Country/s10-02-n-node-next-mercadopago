@@ -68,8 +68,11 @@ export default function NavbarHome() {
   useEffect(() => {
     mySocket?.on('connect', () => {
       console.log('Conectado!!')
-      mySocket?.emit('newUser', _id)
     })
+
+    if (_id) {
+      mySocket?.emit('newUser', _id)
+    }
 
     mySocket?.on('notification', (data: any) => {
       console.log(data)
@@ -77,7 +80,7 @@ export default function NavbarHome() {
 
       setNotifications((prev: any) => [...prev, data])
     })
-  }, [_id, mySocket])
+  }, [_id])
 
   return (
     <>
