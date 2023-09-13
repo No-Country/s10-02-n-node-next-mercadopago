@@ -62,12 +62,12 @@ const Banner: React.FC<BannerProps> = ({ bannerClasses }) => {
         </div>
       </section>
       <div className='vector-container flex bg-gray-100'>
-        <section className='vector-container1  flex relative'>
-          <div className='flex flex-1 container mx-auto px-5 py-24 items-center justify-center flex-col'>
-            <div className='flex space-x-4'>
-              <div className={`card flex items-center drop-shadow-2xl `}>
+        <section className='vector-container1 flex relative'>
+          <div className='flex flex-1 container mx-auto px-5 py-24 items-center justify-center flex-row'>
+            <div className='flex space-x-4 '>
+              <div className={`card flex items-center drop-shadow-2xl mb-16 lg:mb-0`}>
                 <Image
-                  className={`card-vector1 lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded`}
+                  className={`card-vector1 lg:w-2/6 md:w-3/6 w-4/6 mb-10 object-cover object-center rounded`}
                   alt='hero'
                   src={Vector1}
                   width={200}
@@ -75,16 +75,16 @@ const Banner: React.FC<BannerProps> = ({ bannerClasses }) => {
                 />
                 <div className='text-and-button '>
                   <div className=''>
-                    <h2 className='w-full'>
+                    <h2 className='md:w-full lg:mx-0 md:text-2xl '>
                       Maneja tus finanzas, y transfiere gratis
                     </h2>
-                    <p className='w-full'>
+                    <p className='lg:mx-0'>
                       Puedes hacer crecer tus ahorros con GBM, comprar en meses
                       y pagar servicios desde el celular.
                     </p>
                   </div>
                   <div>
-                    <button className='w-full  bg-tertiary text-white hover:bg-tertiaryDark'>
+                    <button className='w-full lg:mx-0 lg:ml-0   bg-tertiary text-white hover:bg-tertiaryDark'>
                       Conoce tus cuentas
                     </button>
                   </div>
@@ -95,7 +95,7 @@ const Banner: React.FC<BannerProps> = ({ bannerClasses }) => {
           <div className='container mx-auto flex px-5 py-24 items-center justify-center flex-col'>
             <div className='card flex items-center'>
               <Image
-                className='card-vector2 lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded'
+                className='card-vector2 lg:w-2/6 md:w-3/6 w-4/6 mb-10 object-cover object-center rounded'
                 alt='hero'
                 src={Vector}
                 width={200}

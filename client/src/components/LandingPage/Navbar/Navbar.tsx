@@ -46,10 +46,10 @@ const Navbar = (): JSX.Element => {
 
   return (
     <>
-      <nav className="nav-container flex justify-between px-80 ">
-        <ul className="flex items-center gap-6">
+      <nav className="nav-container flex justify-between">
+        <ul className="flex items-center md:ml-12 xs:ml-3 ">
           <Link href="/" className="logo-nav text-primary">
-            <Image src={logo} alt="logo" className="w-[160px]" />
+            <Image src={logo} alt="logo" className="md:w-[160px] xs:w-[120px]" />
           </Link>
         </ul>
         <ul className={`flex items-center gap-6`}>
@@ -127,7 +127,7 @@ const Navbar = (): JSX.Element => {
                           showModal2 ? 'show-modal' : ''
                         }`}
                       >
-                        <h2 className="forbussines-text font-medium mt-6 mb-6 ml-5">
+                        <h2 className="forbussines-text font-medium mt-6 mb-6 ml-5 ">
                           Para tu negocio
                         </h2>
                         <div className="forbussines-items text-sm">
@@ -189,7 +189,7 @@ const Navbar = (): JSX.Element => {
             </Link>
           </li>
 
-          <li className="help-nav text-base">
+          <li className="help-nav text-base mr-12">
             <Link href="/">Ayuda</Link>
           </li>
         </ul>

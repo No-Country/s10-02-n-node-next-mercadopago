@@ -14,6 +14,7 @@
   position: relative;
 }
 .modal-wrapper {
+  /* margin: 0px 40px 0px 40px; */
   position: relative;
   display: inline-block;
 }
