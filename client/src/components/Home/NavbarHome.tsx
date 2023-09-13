@@ -66,21 +66,29 @@ export default function NavbarHome() {
   }, [])
 
   useEffect(() => {
-    mySocket?.on('notification', (data: any) => {
-      setNotifications((prev: any) => [...prev, data])
-    })
-
     mySocket?.on('connect', () => {
       console.log('Conectado!!')
-      mySocket?.emit('newUser', _id)
     })
-  }, [_id, mySocket])
+
+    if (_id) {
+      mySocket?.emit('newUser', _id)
+    }
+
+    mySocket?.on('notification', (data: any) => {
+      console.log(data)
+      console.log('Llego la notificacion!!')
+
+      setNotifications((prev: any) => [...prev, data])
+    })
+  }, [_id])
 
   return (
     <>
-      <header className="relative flex items-center justify-between w-full h-16 px-6 bg-tertiary">
-        {/* Titulo de la pagina */}
-        <p className="text-lg font-bold text-white">{pageTitle}</p>
+      <header className="w-full h-16 bg-tertiary drop-shadow-xl flex justify-between items-center px-5">
+        {/* Sección del logo */}
+        <p className="inline-flex w-auto text-lg font-bold text-white">
+          {pageTitle}
+        </p>
         {/* Icono de ayuda */}
         <figure
           className="relative w-6 h-6 cursor-pointer"
