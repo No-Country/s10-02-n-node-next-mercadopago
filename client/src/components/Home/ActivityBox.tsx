@@ -1,42 +1,61 @@
-"use client"
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
 import search from '../../../public/assets/dashboard/search.svg'
 import arrow from '../../../public/assets/dashboard/arrow2.svg'
 import ActivityItem from './ActivityItem'
 import { useEffect, useState } from 'react'
-import data from '@/components/data.json'
+import { getSession } from 'next-auth/react'
+import { API } from '@/services/config'
 export interface Movements {
-  wallet_id: string
-  movement_type: string
+  _id: string
+  walletId: string
+  movement: string
+  nameDest: string
+  type: string
   amount: number
   source: string
   destination: string
   status: string
-  date_created: string
-  date_updated: string
-  version: string
+  createdAt: string
+  updatedAt: string
+  __v: number
 }
 
 export default function ActivityBox() {
   const [dataActivity, setdataActivity] = useState<Movements[]>([])
+  // const [dataAll, setdataAll] = useState<Movements[]>([])
 
+  
   useEffect(() => {
+    const dataActivity = async () => {
+      const session = await getSession()
+      const { data } = await API.get('movements', {
+        headers: { Authorization: `Bearer ${session?.user.token}` },
+      })
+      console.log(data)
+      setdataActivity(data)
+    }
 
-    // const fetchdataActivity = async () => {
+    dataActivity()
+    // const  dataAll = async () =>{
     //   const session = await getSession()
-
-    //   const result = await API.get('api/movements', {
+    //   const { data } = await API.get('movements/all', {
     //     headers: { Authorization: `Bearer ${session?.user.token}` },
     //   })
-
-    //   setdataActivity(result)
+    //   const other = JSON.stringify(data)
+    //   console.log("dataAll: ",other)
+    //   setdataAll(data)
     // }
+    // dataAll()
 
-    // fetchdataActivity()
-
-    setdataActivity(data)
   }, [])
+
+  // const dataCompareAll= dataAll.find((find)=>find.destination)
+ 
+  if (!dataActivity) {
+    return <div>Loading...</div>
+  }
 
   return (
     <>
@@ -56,11 +75,8 @@ export default function ActivityBox() {
           ></Image>
         </section>
         <section className="w-[600px] h-[640px] px-16 py-16">
-          {data.map((activityItem) => (
-            <ActivityItem
-              key={activityItem.wallet_id}
-              activityItem={activityItem}
-            />
+          {dataActivity.reverse().map((activityItem) => (
+            <ActivityItem key={activityItem._id} activityItem={activityItem} />
           ))}
         </section>
         <Link href={'/home'} className="flex justify-between px-16">
