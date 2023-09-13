@@ -1,0 +1,36 @@
+[
+  {
+    "wallet_id": "wallet_002",
+    "movement_type": "withdrawal",
+    "amount": 150.0,
+    "source": "bank_account_002",
+    "destination": "wallet_002",
+    "status": "completed",
+    "date_created": "2023-09-10T21:37:39Z",
+    "date_updated": "2023-09-10T21:37:39Z",
+    "version": "1.0"
+  },
+  {
+    "wallet_id": "wallet_004",
+    "movement_type": "transfer",
+    "amount": 50.0,
+    "source": "",
+    "destination": "wallet_001",
+    "status": "failed",
+    "date_created": "2023-09-10T21:37:39Z",
+    "date_updated": "",
+    "version": "1.0"
+  },
+
+  {
+    "wallet_id": "wallet_003",
+    "movement_type": "deposit",
+    "amount": 200.0,
+    "source": "bank_account_003",
+    "destination": "wallet_003",
+    "status": "pending",
+    "date_created": "2023-09-11T21:37:39Z",
+    "date_updated": "",
+    "version": "1.0"
+  }
+]

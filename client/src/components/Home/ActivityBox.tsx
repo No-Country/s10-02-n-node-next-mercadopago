@@ -1,10 +1,43 @@
+"use client"
 import Image from 'next/image'
 import Link from 'next/link'
 import search from '../../../public/assets/dashboard/search.svg'
 import arrow from '../../../public/assets/dashboard/arrow2.svg'
 import ActivityItem from './ActivityItem'
+import { useEffect, useState } from 'react'
+import data from '@/components/data.json'
+export interface Movements {
+  wallet_id: string
+  movement_type: string
+  amount: number
+  source: string
+  destination: string
+  status: string
+  date_created: string
+  date_updated: string
+  version: string
+}
 
 export default function ActivityBox() {
+  const [dataActivity, setdataActivity] = useState<Movements[]>([])
+
+  useEffect(() => {
+
+    // const fetchdataActivity = async () => {
+    //   const session = await getSession()
+
+    //   const result = await API.get('api/movements', {
+    //     headers: { Authorization: `Bearer ${session?.user.token}` },
+    //   })
+
+    //   setdataActivity(result)
+    // }
+
+    // fetchdataActivity()
+
+    setdataActivity(data)
+  }, [])
+
   return (
     <>
       <div className="w-[892px] h-[772px] flex flex-col bg-white rounded-lg shadow-[0.0px_4.0px_4.0px_rgba(0,0,0,0.25)]">
@@ -23,7 +56,12 @@ export default function ActivityBox() {
           ></Image>
         </section>
         <section className="w-[600px] h-[640px] px-16 py-16">
-          <ActivityItem />
+          {data.map((activityItem) => (
+            <ActivityItem
+              key={activityItem.wallet_id}
+              activityItem={activityItem}
+            />
+          ))}
         </section>
         <Link href={'/home'} className="flex justify-between px-16">
           <div className="text-base font-semibold leading-normal  text-start text-sky-500">
