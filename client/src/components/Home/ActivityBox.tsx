@@ -12,12 +12,12 @@ export default function ActivityBox() {
   return (
     <>
       <div className="w-[892px] h-[772px] flex flex-col bg-white rounded-lg shadow-[0.0px_4.0px_4.0px_rgba(0,0,0,0.25)]">
-        <header className="">
+        <div>
           <h3 className="px-16 mt-5 text-base font-semibold leading-normal text-black text-start">
             Tu actividad
           </h3>
           <div className=" w-[892px] h-px bg-zinc-300 mt-3" />
-        </header>
+        </div>
         <section className="px-16">
           <input className=" w-[772px] h-[41px] bg-zinc-300 rounded-lg absolute focus:border-2 focus:border-primary mt-5 ps-10 px-10 focus:outline-none" />
           <Image
