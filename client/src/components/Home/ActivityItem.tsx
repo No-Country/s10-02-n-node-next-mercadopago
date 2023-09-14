@@ -1,35 +1,34 @@
-import Image from 'next/image';
-import React from 'react';
-import imageItem from '../../../public/assets/dashboard/image-item.png';
+import Image from 'next/image'
+import transfer from '@/../../public/assets/dashboard/wallet.svg'
 
-export default function ActivityItem() {
+export default function ActivityItem({ movement }: any) {
   return (
     <>
-      <section className='w-[750px] h-[570px] flex justify-between mt-5 '>
-        <div className='flex gap-8 '>
+      <section className="w-[750px] flex justify-between mt-5 ">
+        <div className="flex gap-8 ">
           <Image
-            src={imageItem}
-            className=' w-[47px] h-[47px]'
-            alt='image-item'
+            src={transfer}
+            className=" w-[47px] h-[47px]"
+            alt="image-item"
           />
-          <div className='flex flex-col '>
-            <div className=' text-start text-black text-base font-normal leading-normal'>
-              Recarga de celular
+          <div className="flex flex-col ">
+            <div className="text-base font-normal leading-normal text-black text-start">
+              {movement.detail}
             </div>
-            <div className=' text-start text-neutral-500 text-base font-normal leading-normal'>
-              Claro
+            <div className="text-base font-normal leading-normal text-start text-neutral-500">
+              Mercado Wallet
             </div>
           </div>
         </div>
-        <div className='flex flex-col'>
-          <div className=' text-center text-black text-base font-normal leading-normal'>
-            -$2000
+        <div className="flex flex-col">
+          <div className="text-base font-normal leading-normal text-center text-black ">
+            $ {movement.amount}
           </div>
-          <div className='text-center text-neutral-500 text-base font-normal leading-normal'>
-            Ayer
+          <div className="text-base font-normal leading-normal text-center text-neutral-500">
+            Hoy{/* {new Date().toLocaleDateString()} */}
           </div>
         </div>
       </section>
     </>
-  );
+  )
 }

@@ -37,7 +37,7 @@ export default function BalanceWallet() {
         <div className="flex items-center justify-between px-5">
           <div className="flex gap-4 ">
             <p className="text-start  mt-3 text-black text-[31px] font-semibold leading-normal">
-              ${hidden ? '***' : ` ${formatMoney(balance?.balance)}`}
+              $ {hidden ? '***' : ` ${formatMoney(balance?.balance)}`}
             </p>
             {!hidden ? (
               <svg
@@ -71,9 +71,9 @@ export default function BalanceWallet() {
                   y2="166.8"
                   fill="none"
                   stroke="#000"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="12"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="12"
                 />
                 <line
                   x1="154.2"
@@ -82,9 +82,9 @@ export default function BalanceWallet() {
                   y2="189.6"
                   fill="none"
                   stroke="#000"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="12"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="12"
                 />
                 <line
                   x1="101.7"
@@ -93,9 +93,9 @@ export default function BalanceWallet() {
                   y2="189.6"
                   fill="none"
                   stroke="#000"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="12"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="12"
                 />
                 <line
                   x1="54.8"
@@ -104,17 +104,17 @@ export default function BalanceWallet() {
                   y2="167"
                   fill="none"
                   stroke="#000"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="12"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="12"
                 />
                 <path
                   d="M32,104.9C48.8,125.7,79.6,152,128,152s79.2-26.3,96-47.1"
                   fill="none"
                   stroke="#000"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="12"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="12"
                 />
               </svg>
             )}
