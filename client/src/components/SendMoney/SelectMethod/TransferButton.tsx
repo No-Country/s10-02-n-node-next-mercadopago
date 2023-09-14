@@ -1,11 +1,13 @@
 'use client'
 
 import { depositMoneyWallet, transferMoneyToUser } from '@/services'
+import { useActivity } from '@/store/activityStore'
 import { useTransferData, useUserProfile } from '@/store/userStore'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
 function TransferButton() {
+  const { setMovements } = useActivity()
   const router = useRouter()
   const {
     id,
@@ -20,6 +22,7 @@ function TransferButton() {
   const handleTransferFromWallet = async () => {
     const response = await transferMoneyToUser(id, { balance: tempMoney })
     if (response.status === 201) {
+      setMovements({ detail: 'Transferencia enviada', amount: tempMoney })
       router.push('/success')
     }
   }
@@ -38,6 +41,7 @@ function TransferButton() {
             balance: tempMoney,
           })
           if (response.status === 201) {
+            setMovements({ detail: 'Transferencia enviada', amount: tempMoney })
             updateWallet(tempMoney)
             setTempMoney(0)
             setSelectedPaymentId('')

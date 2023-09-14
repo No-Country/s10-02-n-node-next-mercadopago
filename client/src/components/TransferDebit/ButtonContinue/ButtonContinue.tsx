@@ -1,6 +1,7 @@
 'use client'
 
 import { depositMoneyWallet } from '@/services'
+import { useActivity } from '@/store/activityStore'
 import { useTransferData } from '@/store/userStore'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
@@ -10,6 +11,7 @@ function ButtonContinue() {
   const { selectedPaymentId, tempMoney, setTempMoney, setSelectedPaymentId } =
     useTransferData()
   const { mutate: depositMoney } = useMutation(depositMoneyWallet)
+  const { setMovements } = useActivity()
 
   const handleTransferFromCard = async () => {
     depositMoney(
@@ -20,6 +22,7 @@ function ButtonContinue() {
       },
       {
         onSuccess: async () => {
+          setMovements({ detail: 'Ingreso de dinero', amount: tempMoney })
           setTempMoney(0)
           setSelectedPaymentId('')
           router.push('/success')

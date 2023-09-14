@@ -11,20 +11,20 @@
 }
 
 .profile-icons{
-  border: 2px solid #423f3f;
+    border: 2px solid #b4adade3;
     border-radius: 50%;
     justify-content: center;
     align-items: center;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     margin: 0 auto;
-    margin-top: 35px;
+    margin-top: 50px;
     margin-left: 50px;
 }
 .go-go {
     position: absolute;
-    top: 50%;
+    top: 60%;
     right: 0;
     transform: translateY(-50%);
-    margin-right: 10px; 
+    margin-right: 30px; 
 }

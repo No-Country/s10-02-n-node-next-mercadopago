@@ -6,6 +6,8 @@ import bell from '../../../public/assets/dashboard/bell.svg'
 import { usePathname } from 'next/navigation'
 import { io } from 'socket.io-client'
 import { useUserProfile } from '@/store/userStore'
+import { useQueryClient } from '@tanstack/react-query'
+import { useActivity } from '@/store/activityStore'
 
 export default function NavbarHome() {
   const pathname = usePathname()
@@ -16,7 +18,7 @@ export default function NavbarHome() {
     { path: '/balance', title: 'Tu dinero' },
 
     { path: '/send-money', title: 'Enviar dinero' },
-    { path: '/send-money/deposit-money', title: 'Enviar dinero' },
+
     {
       path: '/send-money/pay-method',
       title: 'Enviar dinero',
@@ -25,8 +27,14 @@ export default function NavbarHome() {
       path: '/send-money/search-user',
       title: 'Enviar dinero',
     },
+    {
+      path: '/send-money/deposit-money',
+      title: 'Enviar dinero',
+    },
     { path: '/spei', title: 'Enviar dinero' },
     { path: '/money-charge', title: 'Ingresar dinero' },
+
+    { path: '/money-charge/clabe', title: 'Transferencia por SPEI' },
     { path: '/money-charge/transfer-debit', title: 'Ingresar dinero' },
   ]
 
@@ -37,7 +45,9 @@ export default function NavbarHome() {
   const [mySocket, setMySocket] = useState<any>(undefined)
   const [notifications, setNotifications] = useState<any>([])
   const [open, setOpen] = useState(false)
+  const queryClient = useQueryClient()
   const { _id } = useUserProfile()
+  const { setMovements } = useActivity()
 
   // ------- Handle notifications ----------
   const displayNotification = (msg: string) => {
@@ -75,16 +85,15 @@ export default function NavbarHome() {
     }
 
     mySocket?.on('notification', (data: any) => {
-      console.log(data)
-      console.log('Llego la notificacion!!')
-
+      queryClient.invalidateQueries({ queryKey: ['wallet'] })
+      setMovements({ detail: 'Transferencia recibida', amount: 3000 })
       setNotifications((prev: any) => [...prev, data])
     })
   }, [_id])
 
   return (
     <>
-      <header className="w-full h-16 bg-tertiary drop-shadow-xl flex justify-between items-center px-5">
+      <header className="flex items-center justify-between w-full h-16 px-5 bg-tertiary drop-shadow-xl">
         {/* Sección del logo */}
         <p className="inline-flex w-auto text-lg font-bold text-white">
           {pageTitle}

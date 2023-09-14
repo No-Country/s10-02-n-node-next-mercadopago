@@ -1,10 +1,14 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import search from '../../../public/assets/dashboard/search.svg'
 import arrow from '../../../public/assets/dashboard/arrow2.svg'
 import ActivityItem from './ActivityItem'
+import { useActivity } from '@/store/activityStore'
 
 export default function ActivityBox() {
+  const { movements } = useActivity()
   return (
     <>
       <div className="w-[892px] h-[772px] flex flex-col bg-white rounded-lg shadow-[0.0px_4.0px_4.0px_rgba(0,0,0,0.25)]">
@@ -22,11 +26,13 @@ export default function ActivityBox() {
             className="relative w-6 h-6 top-7 left-3"
           ></Image>
         </section>
-        <section className="w-[600px] h-[640px] px-16 py-16">
-          <ActivityItem />
+        <section className="w-[600px] h-[640px] px-16 py-16 flex flex-col gap-4 items-start">
+          {movements.map((msg, index) => (
+            <ActivityItem movement={msg} key={index} />
+          ))}
         </section>
         <Link href={'/home'} className="flex justify-between px-16">
-          <div className="text-base font-semibold leading-normal  text-start text-sky-500">
+          <div className="text-base font-semibold leading-normal text-start text-sky-500">
             Ver toda tu actividad
           </div>
           <Image src={arrow} alt="arrow" className="relative w-6 h-6 " />
