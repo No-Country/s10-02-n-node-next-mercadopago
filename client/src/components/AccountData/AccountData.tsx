@@ -1,6 +1,6 @@
-"use client"
+'use client'
 import { useUserProfile } from '@/store/userStore'
-import Link from 'next/link';
+import Link from 'next/link'
 
 type CardProps = {
   title?: string
@@ -10,20 +10,18 @@ type CardProps = {
 }
 
 const Card = ({ title, subtitle, description, buttonText }: CardProps) => {
-
-
   return (
-    <section className="w-4/5 rounded overflow-hidden shadow-lg">
+    <section className="w-4/5  overflow-hidden rounded-lg shadow-[0px_1px_4px_2px_#00000025]">
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2 pb-4 text-green-500 border-b border-gray-200">
+        <div className="font-bold text-xl mb-2 pb-4 text-green-500 ">
           {title}
         </div>
         <p className="text-gray-900 font-semibold text-lg">{subtitle}</p>
         <p className="text-gray-700 text-base">{description}</p>
         <Link href="/profile/account-data/verify-name">
-        <span className="mt-2 flex items-center justify-end  text-primary cursor-pointer font-bold py-2 px-4">
-          {buttonText}
-        </span>
+          <span className="mt-2 flex items-center justify-end  text-primary cursor-pointer font-bold py-2 px-4">
+            {buttonText}
+          </span>
         </Link>
         <br />
       </div>
@@ -32,15 +30,14 @@ const Card = ({ title, subtitle, description, buttonText }: CardProps) => {
 }
 
 const AccountData = () => {
-  const data = useUserProfile();
+  const data = useUserProfile()
 
-  
   return (
     <section className="w-[980px] m-4 flex flex-col gap-4">
       <Card
         title="&#x2714; Validado"
         subtitle="E- mail"
-        description={data.email === ""? " " : data.email}
+        description={data.email === '' ? ' ' : data.email}
         buttonText="Modificar"
       />
       <Card
@@ -50,7 +47,7 @@ const AccountData = () => {
       />
       <Card
         subtitle="Nombre de Usuario"
-        description={data.name === ""? " " : data.name}
+        description={data.name === '' ? ' ' : data.name}
         buttonText="Modificar"
       />
       <Card

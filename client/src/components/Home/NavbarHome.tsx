@@ -18,7 +18,7 @@ export default function NavbarHome() {
     { path: '/balance', title: 'Tu dinero' },
 
     { path: '/send-money', title: 'Enviar dinero' },
-    { path: '/send-money/deposit-money', title: 'Enviar dinero' },
+
     {
       path: '/send-money/pay-method',
       title: 'Enviar dinero',
@@ -27,8 +27,14 @@ export default function NavbarHome() {
       path: '/send-money/search-user',
       title: 'Enviar dinero',
     },
+    {
+      path: '/send-money/deposit-money',
+      title: 'Enviar dinero',
+    },
     { path: '/spei', title: 'Enviar dinero' },
     { path: '/money-charge', title: 'Ingresar dinero' },
+
+    { path: '/money-charge/clabe', title: 'Transferencia por SPEI' },
     { path: '/money-charge/transfer-debit', title: 'Ingresar dinero' },
   ]
 
