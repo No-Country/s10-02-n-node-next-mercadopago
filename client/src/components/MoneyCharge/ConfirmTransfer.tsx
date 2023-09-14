@@ -7,6 +7,7 @@ import {
   depositMoneyWallet,
   transferMoneyToUser,
 } from '@/services'
+import { useActivity } from '@/store/activityStore'
 import { useTransferData, useUserProfile } from '@/store/userStore'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
@@ -30,6 +31,7 @@ function ConfirmTransfer() {
   // Store Handlers
   const { updateWallet } = useUserProfile()
   const { tempMoney, setTempMoney, id } = useTransferData()
+  const { setMovements } = useActivity()
 
   // Mutations and Form Handlers
   const { mutate: depositMoney } = useMutation(depositMoneyWallet)
@@ -63,13 +65,17 @@ function ConfirmTransfer() {
                     balance: tempMoney,
                   })
                   if (response.status === 201) {
+                    setMovements({
+                      detail: 'Transferencia enviada',
+                      amount: tempMoney,
+                    })
                     updateWallet(tempMoney)
                     setTempMoney(0)
                     router.push('/success')
                     return
                   }
                 }
-
+                setMovements({ detail: 'Ingreso de dinero', amount: tempMoney })
                 updateWallet(tempMoney)
                 setTempMoney(0)
                 router.push('/success')
