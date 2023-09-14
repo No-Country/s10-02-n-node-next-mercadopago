@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 interface Activity {
   movements: object[]
@@ -6,9 +7,9 @@ interface Activity {
 }
 
 export const useActivity = create<Activity>((set) => ({
-  movements: [{ detail: 'Ingreso de dinero', amount: 1000 }],
+  movements: [],
   setMovements: (data: any) =>
     set((state: any) => ({
-      movements: [...state.movements, data],
+      movements: [data, ...state.movements],
     })),
 }))
