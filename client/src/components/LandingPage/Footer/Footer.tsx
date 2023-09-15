@@ -13,16 +13,16 @@ const Footer = () => {
   return (
     <footer>
       <div className="bg-gray-100 w-full flex flex-col justify-center items-center">
-        <div className="mt-10 px-96">
-          <hr className="" />
-        </div>
+
+          <hr className="border-[1px] bg-black min-w-full" />
+
 
         <div className="flex flex-col ">
-          <p className="text-gray-500 text-[9px] px-96 mt-6">
+          <p className="text-gray-500 text-[9px] mx-20 mt-6">
             *Servicios y/o productos operados por MP Agregador, S. de R.L. de
             C.V. ("Mercado Pago Standard").
           </p>
-          <p className="text-gray-500 text-[9px] px-96  mt-6">
+          <p className="text-gray-500 text-[9px] mx-20  mt-6">
             MercadoLibre, S.A. de C.V., Institución de Fondos de Pago
             Electrónico (identificada bajo la marca "Mercado Pago Wallet"), es
             una Institución de Tecnología Financiera que se encuentra
@@ -45,7 +45,7 @@ const Footer = () => {
             </span>
           </p>
         </div>
-        <div className="flex flex-row -ml-[795px] mt-6">
+        <div className="flex flex-col lg:flex-row -ml-72 lg:-ml-[795px] mt-6">
           <div className="flex flex-col justify-start">
             <p className="text-gray-500 text-[10px]">
               Información al usuario financiero
@@ -59,8 +59,8 @@ const Footer = () => {
             />
           </div>
 
-          <div className="inline-block h-[100px] min-h-[1em] w-[1px] ml-4 self-stretch bg-gray-200 opacity-100 dark:opacity-50"></div>
-          <div className="flex flex-col justify-start ml-3">
+          <div className="border-[1px] bg-black mt-5 lg:inline-block lg:h-[100px] lg:min-h-[1em] lg:w-[1px] lg:ml-4 lg:self-stretch lg:bg-gray-200 lg:opacity-100 lg:dark:opacity-50"></div>
+          <div className="mt-3 flex flex-col justify-start ml-0 lg:mt-0">
             <p className="text-gray-500 text-[10px]">
               Información sobre seguros
             </p>
@@ -73,18 +73,18 @@ const Footer = () => {
             />
           </div>
         </div>
-        <div className="flex flex-row justify-start items-center -ml-[940px] mb-3">
+        <div className="flex flex-row justify-start items-center -ml-[250px] lg:-ml-[940px] mb-3 mt-4 lg:mt-0">
           <Image src={message} alt="message" width={25} height={25} />
           <p className=" text-sky-600 text-xs ml-2 ">
             ayuda@mercadopago.com.ar
           </p>
         </div>
       </div>
-      <div className="bg-white  w-full  flex flex-row  mr-44 gap-40  py-10">
-        <div className=" ml-80 mt-10">
+      <div className="bg-white  w-full  flex flex-col lg:flex-row  mr-44 gap-40  py-10">
+        <div className=" ml-8 lg:ml-24 lg:mt-10">
           <Image src={logo} width={170} height={90} alt="logo-mercadopago1" />
         </div>
-        <div className="text-gray-500 text-xs mt-10">
+        <div className="text-gray-500 text-xs -mt-28 lg:mt-10 ml-10 lg:ml-0">
           <Link href={`/`}>
             <p className=" font-semibold mb-2 ">Para Ti</p>
           </Link>
@@ -125,7 +125,7 @@ const Footer = () => {
           <br />
         </div>
 
-        <div className="text-gray-500 text-xs mt-10">
+        <div className="text-gray-500 text-xs -mt-28 lg:mt-10 ml-10 lg:ml-0">
           <Link href={`/`}>
             <p className=" font-semibold mb-2 ">Para Tu Negocio</p>
           </Link>
@@ -163,7 +163,7 @@ const Footer = () => {
           </Link>
           <br />
         </div>
-        <div className="text-gray-500  text-xs mt-10 first:mb-10">
+        <div className="text-gray-500  text-xs -mt-28 lg:mt-10 ml-10 lg:ml-0">
           <Link href={`/`}>
             <p className=" font-semibold mb-2  text-gray-500">Acerca de</p>
           </Link>
@@ -203,22 +203,22 @@ const Footer = () => {
         </div>
       </div>
       <div className="bg-gray-100 w-full">
-        <div className="flex text-gray-500 text-[11px] py-5 pr-36  gap-10 ml-96">
+        <div className="hidden lg:flex lg:text-gray-500 lg:text-[11px] lg:py-5 pr-36  lg:gap-10 lg:ml-96">
           <p>Recargá tu celular</p>
           <p>Pagá tus recibos</p>
           <p>Envia y pide dinero</p>
         </div>
         <hr className=" bg-black border-[1px] dark:bg-black mx-96" />
 
-        <div className="text-gray-500 text-[11px] py-5 flex justify-center gap-36 ">
-          <div className="">
+        <div className="text-gray-500 text-[11px] py-5 flex justify-start lg:justify-center gap-36 ">
+          <div className="hidden lg:flex">
             <p>
               Copyright © 2023 "MP Agregador, S. de R.L. de C.V." Insurgentes
               Sur 1602, Piso 4, Suite 400, Crédito Constructor, Benito Juárez,
               03940, Ciudad de México, CDMX, México.
             </p>
           </div>
-          <div className="flex">
+          <div className="flex justify-start ml-8 lg:ml-0">
             <Image
               src={facebookLogo}
               alt="face-logo"

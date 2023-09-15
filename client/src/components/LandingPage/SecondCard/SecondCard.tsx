@@ -4,7 +4,7 @@ import cuenta from '../../../../public/cuenta.png';
 
 const SecondCard = () => {
   return (
-    <div className='flex flex-col justify-center items-center'>
+    <div className='flex flex-col justify-center items-center mb-4'>
       <div className='mx-auto px-4 bg-gray-100 flex flex-row justify-between items-center my-4 border rounded-md w-[600px]'>
         <div>
           <Image

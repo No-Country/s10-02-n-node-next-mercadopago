@@ -60,8 +60,8 @@
   .card {
     display: flex;
     flex-direction: column;
-    width: 450px;
-    height: 650px;
+    width: 350px;
+    height: 550px;
   }
   .vector-container1 {
     margin-top: 200px;
