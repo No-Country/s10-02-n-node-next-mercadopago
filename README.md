@@ -1,7 +1,7 @@
 <div aling="center"> <h1> Proyecto: Mercado Wallet <h1> </div>
 
 <div aling="center">
-<img src="./client//public//banner.png">
+<img src="./client/public/banner.png">
 
 <br>
 <br>
